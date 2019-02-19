@@ -3,7 +3,7 @@ import Place from './Place';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const PLACES_QUERY = gql`
+export const PLACES_QUERY = gql`
     {
         places {
             id
