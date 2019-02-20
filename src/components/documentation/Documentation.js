@@ -63,7 +63,7 @@ export class Documentation extends Component {
             'description': 'bbb',
           },
         ],
-        occurrences: [
+        events: [
           {
             'id': 'cjrtbf4ct000y0634ju8foe0a',
             'name': 'Evasion de Centrale Moutte',
