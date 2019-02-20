@@ -4,12 +4,10 @@ import { CategoryItem } from './CategoryItem';
 export class Category extends Component {
   render () {
     return <div>
-      <div>Category title</div>
+      <div>{this.props.title}</div>
       <ul>
-        <CategoryItem/>
-        <CategoryItem/>
-        <CategoryItem/>
-        <CategoryItem/>
+        {this.props.items.map(
+          (item) => <CategoryItem key={item.id} name={item.name}/>)}
       </ul>
     </div>;
   }
