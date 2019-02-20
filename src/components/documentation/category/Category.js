@@ -7,7 +7,14 @@ export class Category extends Component {
       <div>{this.props.title}</div>
       <ul>
         {this.props.items.map(
-          (item) => <CategoryItem key={item.id} name={item.name}/>)}
+          (item) => {
+            return <CategoryItem
+              key={item.id}
+              item={item}
+              type={this.props.type}
+              onItemSelected={this.props.onItemSelected}/>;
+          },
+        )}
       </ul>
     </div>;
   }

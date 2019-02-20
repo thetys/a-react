@@ -5,7 +5,9 @@ import { DocumentationSidebar } from './DocumentationSidebar';
 export class Documentation extends Component {
   constructor (props) {
     super(props);
+    this.handleItemChange = this.handleItemChange.bind(this);
     this.state = {
+      selected: null,
       categories: {
         characters: [
           {
@@ -86,9 +88,14 @@ export class Documentation extends Component {
     };
   }
 
+  handleItemChange (item) {
+    this.setState({ selected: item });
+  }
+
   render () {
     return <div className="w100">
-      <DocumentationSidebar categories={this.state.categories}/>
+      <DocumentationSidebar categories={this.state.categories}
+                            onItemSelected={this.handleItemChange}/>
       <DocumentationContent/>
     </div>;
   }
