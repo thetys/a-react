@@ -96,7 +96,7 @@ export class Documentation extends Component {
     return <div className="w100">
       <DocumentationSidebar categories={this.state.categories}
                             onItemSelected={this.handleItemChange}/>
-      <DocumentationContent/>
+      <DocumentationContent item={this.state.selected} />
     </div>;
   }
 }

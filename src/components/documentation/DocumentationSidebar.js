@@ -6,17 +6,17 @@ export class DocumentationSidebar extends Component {
     return <div className="fl w-20">
       <Category key="places"
                 title="Lieux"
-                type="place"
+                type="Place"
                 items={this.props.categories.places}
                 onItemSelected={this.props.onItemSelected}/>
       <Category key="characters"
                 title="Personnages"
-                type="character"
+                type="Character"
                 items={this.props.categories.characters}
                 onItemSelected={this.props.onItemSelected}/>
       <Category key="occurrences"
                 title="Evènements"
-                type="occurrence"
+                type="Occurrence"
                 items={this.props.categories.occurrences}
                 onItemSelected={this.props.onItemSelected}/>
     </div>;
