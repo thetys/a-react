@@ -64,7 +64,8 @@ export class DocumentationContent extends Component {
           if (loading) return <div>Fetching</div>;
           if (error) return <div>Error</div>;
           const contentProps = item ? { [item.type]: data[item.type] } : {};
-          return <ContentComponent {...contentProps} />;
+          return <ContentComponent {...contentProps}
+                                   onRelationSelected={this.props.onRelationSelected}/>;
         }}
       </Query>}
     </div>;

@@ -12,13 +12,14 @@ export class Documentation extends Component {
   }
 
   handleItemChange (type, id) {
-    this.setState({ selected: {type, id} });
+    this.setState({ selected: { type, id } });
   }
 
   render () {
     return <div className="w100">
       <DocumentationSidebar onItemSelected={this.handleItemChange}/>
-      <DocumentationContent item={this.state.selected}/>
+      <DocumentationContent item={this.state.selected}
+                            onRelationSelected={this.handleItemChange}/>
     </div>;
   }
 }
