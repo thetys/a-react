@@ -3,32 +3,19 @@ import { Category } from './category/Category';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-const GET_CATEGORIES = gql`
+const GET_CATEGORY_NAMES = gql`
     query {
         characters {
             id
             name
-            description
         }
         places {
             id
             name
-            description
         }
         events {
             id
             name
-            description
-            startDate
-            endDate
-            places {
-                id
-                name
-            }
-            characters {
-                id
-                name
-            }
         }
     }
 `;
@@ -54,7 +41,7 @@ export class DocumentationSidebar extends Component {
   }
 
   render () {
-    return <Query query={GET_CATEGORIES}>
+    return <Query query={GET_CATEGORY_NAMES}>
       {({ loading, error, data }) => {
         if (loading) return <div>Fetching</div>;
         if (error) return <div>Error</div>;
