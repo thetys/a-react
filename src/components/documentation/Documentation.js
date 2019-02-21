@@ -11,8 +11,8 @@ export class Documentation extends Component {
     };
   }
 
-  handleItemChange (item) {
-    this.setState({ selected: item });
+  handleItemChange (type, id) {
+    this.setState({ selected: {type, id} });
   }
 
   render () {

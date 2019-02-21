@@ -41,16 +41,16 @@ export class DocumentationSidebar extends Component {
     this.handleEventSelection = this.handleEventSelection.bind(this);
   }
 
-  handlePlaceSelection(item) {
-    this.props.onItemSelected({...item, type: 'place'});
+  handlePlaceSelection(itemId) {
+    this.props.onItemSelected('place', itemId);
   }
 
-  handleCharacterSelection(item) {
-    this.props.onItemSelected({...item, type: 'character'});
+  handleCharacterSelection(itemId) {
+    this.props.onItemSelected('character', itemId);
   }
 
-  handleEventSelection(item) {
-    this.props.onItemSelected({...item, type: 'event'});
+  handleEventSelection(itemId) {
+    this.props.onItemSelected('event', itemId);
   }
 
   render () {
