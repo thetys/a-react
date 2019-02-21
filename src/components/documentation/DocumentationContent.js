@@ -4,6 +4,8 @@ import { Character } from './content/Character';
 import { Event } from './content/Event';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { connect } from 'react-redux';
+import { getSelectedDocumentationContent } from '../../store/selectors';
 
 const QUERIES = {
   character: gql`
@@ -45,7 +47,7 @@ const QUERIES = {
   `,
 };
 
-export class DocumentationContent extends Component {
+class DocumentationContent extends Component {
   contentComponents = {
     'place': Place,
     'character': Character,
@@ -53,7 +55,7 @@ export class DocumentationContent extends Component {
   };
 
   render () {
-    const item = this.props.item;
+    const item = this.props.selectedContent;
     const ContentComponent = item ? this.contentComponents[item.type] : null;
     return <div className="fl w-80">
       {item &&
@@ -64,10 +66,13 @@ export class DocumentationContent extends Component {
           if (loading) return <div>Fetching</div>;
           if (error) return <div>Error</div>;
           const contentProps = item ? { [item.type]: data[item.type] } : {};
-          return <ContentComponent {...contentProps}
-                                   onRelationSelected={this.props.onRelationSelected}/>;
+          return <ContentComponent {...contentProps} />;
         }}
       </Query>}
     </div>;
   }
 }
+
+export default connect(
+  state => ({ selectedContent: getSelectedDocumentationContent(state) }))(
+  DocumentationContent);
