@@ -1,5 +1,37 @@
 import React, { Component } from 'react';
 import { Category } from './category/Category';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+
+const GET_CATEGORIES = gql`
+    query {
+        characters {
+            id
+            name
+            description
+        }
+        places {
+            id
+            name
+            description
+        }
+        events {
+            id
+            name
+            description
+            startDate
+            endDate
+            places {
+                id
+                name
+            }
+            characters {
+                id
+                name
+            }
+        }
+    }
+`;
 
 export class DocumentationSidebar extends Component {
   constructor (props) {
@@ -22,19 +54,26 @@ export class DocumentationSidebar extends Component {
   }
 
   render () {
-    return <div className="fl w-20">
-      <Category key="places"
-                title="Lieux"
-                items={this.props.categories.places}
-                onItemSelected={this.handlePlaceSelection}/>
-      <Category key="characters"
-                title="Personnages"
-                items={this.props.categories.characters}
-                onItemSelected={this.handleCharacterSelection}/>
-      <Category key="events"
-                title="Evènements"
-                items={this.props.categories.events}
-                onItemSelected={this.handleEventSelection}/>
-    </div>;
+    return <Query query={GET_CATEGORIES}>
+      {({ loading, error, data }) => {
+        if (loading) return <div>Fetching</div>;
+        if (error) return <div>Error</div>;
+        return <div className="fl w-20">
+          <Category key="places"
+                    title="Lieux"
+                    items={data.places}
+                    onItemSelected={this.handlePlaceSelection}/>
+          <Category key="characters"
+                    title="Personnages"
+                    items={data.characters}
+                    onItemSelected={this.handleCharacterSelection}/>
+          <Category key="events"
+                    title="Evènements"
+                    items={data.events}
+                    onItemSelected={this.handleEventSelection}/>
+        </div>;
+      }}
+    </Query>;
+
   }
 }
