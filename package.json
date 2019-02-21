@@ -11,16 +11,19 @@
   "dependencies": {
     "apollo-boost": "^0.1.28",
     "graphql": "^14.1.1",
+    "graphql-tag": "latest",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "react": "^16.8.2",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.8.2",
     "react-moment": "^0.8.4",
+    "react-redux": "^6.0.1",
     "react-scripts": "2.1.5",
-    "graphql-tag": "latest"
+    "redux": "^4.0.1"
   },
   "devDependencies": {
+    "redux-devtools": "^3.5.0",
     "tachyons": "^4.10.0"
   },
   "eslintConfig": {
