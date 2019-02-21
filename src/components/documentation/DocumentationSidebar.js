@@ -2,23 +2,39 @@ import React, { Component } from 'react';
 import { Category } from './category/Category';
 
 export class DocumentationSidebar extends Component {
+  constructor (props) {
+    super(props);
+    this.handlePlaceSelection = this.handlePlaceSelection.bind(this);
+    this.handleCharacterSelection = this.handleCharacterSelection.bind(this);
+    this.handleEventSelection = this.handleEventSelection.bind(this);
+  }
+
+  handlePlaceSelection(item) {
+    this.props.onItemSelected({...item, type: 'place'});
+  }
+
+  handleCharacterSelection(item) {
+    this.props.onItemSelected({...item, type: 'character'});
+  }
+
+  handleEventSelection(item) {
+    this.props.onItemSelected({...item, type: 'event'});
+  }
+
   render () {
     return <div className="fl w-20">
       <Category key="places"
                 title="Lieux"
-                type="place"
                 items={this.props.categories.places}
-                onItemSelected={this.props.onItemSelected}/>
+                onItemSelected={this.handlePlaceSelection}/>
       <Category key="characters"
                 title="Personnages"
-                type="character"
                 items={this.props.categories.characters}
-                onItemSelected={this.props.onItemSelected}/>
+                onItemSelected={this.handleCharacterSelection}/>
       <Category key="events"
                 title="Evènements"
-                type="event"
                 items={this.props.categories.events}
-                onItemSelected={this.props.onItemSelected}/>
+                onItemSelected={this.handleEventSelection}/>
     </div>;
   }
 }

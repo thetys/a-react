@@ -7,10 +7,7 @@ export class CategoryItem extends Component {
   }
 
   handleClick () {
-    this.props.onItemSelected({
-      ...this.props.item,
-      type: this.props.type,
-    });
+    this.props.onItemSelected(this.props.item);
   }
 
   render () {
