@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CategoryItem } from './CategoryItem';
+import CategoryItem from './CategoryItem';
 
 export class Category extends Component {
   render () {
@@ -11,7 +11,7 @@ export class Category extends Component {
             return <CategoryItem
               key={item.id}
               item={item}
-              onItemSelected={this.props.onItemSelected}/>;
+              type={this.props.type}/>;
           },
         )}
       </ul>

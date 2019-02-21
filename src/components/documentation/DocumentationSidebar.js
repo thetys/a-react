@@ -21,25 +21,6 @@ const GET_CATEGORY_NAMES = gql`
 `;
 
 export class DocumentationSidebar extends Component {
-  constructor (props) {
-    super(props);
-    this.handlePlaceSelection = this.handlePlaceSelection.bind(this);
-    this.handleCharacterSelection = this.handleCharacterSelection.bind(this);
-    this.handleEventSelection = this.handleEventSelection.bind(this);
-  }
-
-  handlePlaceSelection(itemId) {
-    this.props.onItemSelected('place', itemId);
-  }
-
-  handleCharacterSelection(itemId) {
-    this.props.onItemSelected('character', itemId);
-  }
-
-  handleEventSelection(itemId) {
-    this.props.onItemSelected('event', itemId);
-  }
-
   render () {
     return <Query query={GET_CATEGORY_NAMES}>
       {({ loading, error, data }) => {
@@ -49,15 +30,15 @@ export class DocumentationSidebar extends Component {
           <Category key="places"
                     title="Lieux"
                     items={data.places}
-                    onItemSelected={this.handlePlaceSelection}/>
+                    type="place"/>
           <Category key="characters"
                     title="Personnages"
                     items={data.characters}
-                    onItemSelected={this.handleCharacterSelection}/>
+                    type="character"/>
           <Category key="events"
                     title="Evènements"
                     items={data.events}
-                    onItemSelected={this.handleEventSelection}/>
+                    type="event"/>
         </div>;
       }}
     </Query>;

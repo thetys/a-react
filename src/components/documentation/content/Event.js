@@ -16,8 +16,7 @@ export class Event extends Component {
       }
       <div>{event.description}</div>
       <RelationList
-        relations={{ characters: event.characters, places: event.places }}
-        onRelationSelected={this.props.onRelationSelected}/>
+        relations={{ characters: event.characters, places: event.places }}/>
     </div>;
   }
 }
