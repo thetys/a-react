@@ -45,6 +45,15 @@ const QUERIES = {
   `,
 };
 
+const GET_SELECTED_ITEM = gql`
+    {
+        selectedItem @client {
+            type
+            id
+        }
+    }
+`;
+
 export class DocumentationContent extends Component {
   contentComponents = {
     'place': Place,
@@ -53,21 +62,25 @@ export class DocumentationContent extends Component {
   };
 
   render () {
-    const item = this.props.item;
-    const ContentComponent = item ? this.contentComponents[item.type] : null;
     return <div className="fl w-80">
-      {item &&
-      <Query query={QUERIES[item.type]}
-             variables={{ id: item.id }}
-             skip={!item}>
-        {({ loading, error, data }) => {
-          if (loading) return <div>Fetching</div>;
-          if (error) return <div>Error</div>;
-          const contentProps = item ? { [item.type]: data[item.type] } : {};
-          return <ContentComponent {...contentProps}
-                                   onRelationSelected={this.props.onRelationSelected}/>;
+      <Query query={GET_SELECTED_ITEM}>
+        {({ data: { selectedItem } }) => {
+          if (!selectedItem) return null;
+          const ContentComponent = this.contentComponents[selectedItem.type];
+          return <Query query={QUERIES[selectedItem.type]}
+                 variables={{ id: selectedItem.id }}>
+            {({ loading, error, data }) => {
+              if (loading) return <div>Fetching</div>;
+              if (error) return <div>Error</div>;
+              const contentProps = selectedItem
+                ? { [selectedItem.type]: data[selectedItem.type] }
+                : {};
+              return <ContentComponent {...contentProps}
+                                       onRelationSelected={this.props.onRelationSelected}/>;
+            }}
+          </Query>
         }}
-      </Query>}
+      </Query>
     </div>;
   }
 }

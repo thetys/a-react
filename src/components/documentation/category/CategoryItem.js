@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ApolloConsumer } from 'react-apollo';
 
 export class CategoryItem extends Component {
   constructor (props) {
@@ -11,6 +12,18 @@ export class CategoryItem extends Component {
   }
 
   render () {
-    return <li onClick={this.handleClick}>{this.props.item.name}</li>;
+    return <ApolloConsumer>
+      {client => (
+        <li onClick={() => client.writeData({
+          data: {
+            selectedItem: {
+              type: this.props.type,
+              id: this.props.item.id,
+              __typename: 'DocumentationItem',
+            },
+          },
+        })}>{this.props.item.name}</li>
+      )}
+    </ApolloConsumer>;
   }
 }

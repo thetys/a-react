@@ -11,7 +11,7 @@ export class Category extends Component {
             return <CategoryItem
               key={item.id}
               item={item}
-              onItemSelected={this.props.onItemSelected}/>;
+              type={this.props.type}/>;
           },
         )}
       </ul>
