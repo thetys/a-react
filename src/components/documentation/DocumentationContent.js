@@ -18,6 +18,16 @@ const SEARCH_CONTENT = gql`
                 id
                 name
                 description
+                startDate
+                endDate
+                places {
+                    id
+                    name
+                }
+                characters {
+                    id
+                    name
+                }
                 __typename
             }
             ... on Place {
@@ -48,7 +58,7 @@ export class DocumentationContent extends Component {
       <Query query={GET_SELECTED_ITEM}>
         {({ data: { selectedItem } }) => {
           if (!selectedItem) return null;
-          return <Query query={SEARCH_CONTENT} variables={{id: selectedItem}}>
+          return <Query query={SEARCH_CONTENT} variables={{ id: selectedItem }}>
             {({ loading, error, data }) => {
               if (loading) return <div>Fetching</div>;
               if (error) return <div>Error</div>;
