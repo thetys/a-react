@@ -1,0 +1,1 @@
+{"__schema":{"types":[{"kind":"UNION","name":"AllContent","possibleTypes":[{"name":"Character"},{"name":"Place"},{"name":"Event"}]}]}}

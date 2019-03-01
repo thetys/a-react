@@ -7,11 +7,7 @@ export class CategoryItem extends Component {
       {client => (
         <li onClick={() => client.writeData({
           data: {
-            selectedItem: {
-              type: this.props.type,
-              id: this.props.item.id,
-              __typename: 'DocumentationItem',
-            },
+            selectedItem: this.props.item.id,
           },
         })}>{this.props.item.name}</li>
       )}

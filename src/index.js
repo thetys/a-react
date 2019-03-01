@@ -6,17 +6,26 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo';
 import { typeDefs } from './store/typeDefs';
 import { defaults } from './store/defaults';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {
+  InMemoryCache,
+  IntrospectionFragmentMatcher,
+} from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
-import { withClientState } from 'apollo-link-state';
 import { onError } from 'apollo-link-error';
+import introspectionQueryResultData from './fragmentTypes';
 
-const cache = new InMemoryCache();
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData,
+});
+
+const cache = new InMemoryCache({ fragmentMatcher });
 
 const client = new ApolloClient({
   cache,
+  typeDefs,
+  resolvers: {},
   link: ApolloLink.from([
     onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors)
@@ -27,17 +36,15 @@ const client = new ApolloClient({
         );
       if (networkError) console.log(`[Network error]: ${networkError}`);
     }),
-    withClientState({
-      defaults,
-      typeDefs,
-      resolvers: {},
-      cache
-    }),
     new HttpLink({
       uri: 'http://localhost:4000',
-      credentials: 'same-origin'
+      credentials: 'same-origin',
     }),
-  ])
+  ]),
+});
+
+cache.writeData({
+  data: defaults,
 });
 
 ReactDOM.render(

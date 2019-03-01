@@ -5,60 +5,42 @@ import { Event } from './content/Event';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-const QUERIES = {
-  character: gql`
-      query Character($id: ID!){
-          character(id: $id) {
-              id
-              name
-              description
-          }
-      }
-  `,
-  place: gql`
-      query Place($id: ID!){
-          place(id: $id) {
-              id
-              name
-              description
-          }
-      }
-  `,
-  event: gql`
-      query Event($id: ID!){
-          event(id: $id) {
-              id
-              name
-              description
-              startDate
-              endDate
-              places {
-                  id
-                  name
-              }
-              characters {
-                  id
-                  name
-              }
-          }
-      }
-  `,
-};
+const SEARCH_CONTENT = gql`
+    query Content($id: ID!){
+        search(id: $id) {
+            ... on Character {
+                id
+                name
+                description
+                __typename
+            }
+            ... on Event {
+                id
+                name
+                description
+                __typename
+            }
+            ... on Place {
+                id
+                name
+                description
+                __typename
+            }
+        }
+    }
+`;
 
 const GET_SELECTED_ITEM = gql`
     {
-        selectedItem @client {
-            type
-            id
-        }
+        selectedItem @client
     }
 `;
 
 export class DocumentationContent extends Component {
   contentComponents = {
-    'place': Place,
-    'character': Character,
-    'event': Event,
+    'Place': Place,
+    'Character': Character,
+    'Event': Event,
   };
 
   render () {
@@ -66,16 +48,16 @@ export class DocumentationContent extends Component {
       <Query query={GET_SELECTED_ITEM}>
         {({ data: { selectedItem } }) => {
           if (!selectedItem) return null;
-          const ContentComponent = this.contentComponents[selectedItem.type];
-          return <Query query={QUERIES[selectedItem.type]}
-                 variables={{ id: selectedItem.id }}>
+          return <Query query={SEARCH_CONTENT} variables={{id: selectedItem}}>
             {({ loading, error, data }) => {
               if (loading) return <div>Fetching</div>;
               if (error) return <div>Error</div>;
-              const contentProps = { [selectedItem.type]: data[selectedItem.type] };
+              if (!data.search) return null;
+              const ContentComponent = this.contentComponents[data.search.__typename];
+              const contentProps = { [data.search.__typename.toLowerCase()]: data.search };
               return <ContentComponent {...contentProps} />;
             }}
-          </Query>
+          </Query>;
         }}
       </Query>
     </div>;
