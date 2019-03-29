@@ -41,7 +41,7 @@ const SEARCH_CONTENT = gql`
 `;
 
 const GET_SELECTED_ITEM = gql`
-    {
+    query getSelectedItem {
         selectedItem @client
     }
 `;
